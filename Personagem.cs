@@ -29,6 +29,8 @@ class Personagem : IComparable
     Console.WriteLine("Informaçoes do Seu Personagem");
     Console.Write("Nome: ");
     this.Nome = Console.ReadLine();
+    Console.Write("Type: ");
+    this.Type = Console.ReadLine();
     
   }
   public int CompareTo(object obj)
@@ -37,5 +39,9 @@ class Personagem : IComparable
     Personagem y = (Personagem) obj;
 
     return x.Nome.CompareTo(y.Nome);
+  }
+  public int MoraXP()
+  {
+
   }
 }
