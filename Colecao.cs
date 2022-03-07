@@ -20,26 +20,4 @@ class Colecao<T>
   {
     return lista;
   }
-  public T[] BuscarArtefato(string status)
-  {
-    int i = 0;
-    foreach (T a in lista)
-    {
-      if (a.MainStatus == status)
-      {
-        i++;
-      }    
-    }
-    T[] aux = new T[i];
-
-    int c = 0;
-    foreach (T a in lista)
-    {
-      if (a.MainStatus == status)
-      {
-        aux[c] = a;
-        c++;
-      }
-    }
-  }
 }

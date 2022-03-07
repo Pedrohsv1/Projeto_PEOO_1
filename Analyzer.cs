@@ -56,7 +56,7 @@ class main
       Console.WriteLine("[2] Cadastrar Artefato");
       Console.WriteLine("[3] Listar Personagens");
       Console.WriteLine("[4] Listar Artefatos");
-      Console.WriteLine("[5] Organizar Personagens");
+      Console.WriteLine("[5] Tabela Personagem");
       Console.WriteLine("[00] Sair");
       Console.WriteLine();
       Console.WriteLine("Digite:");
@@ -68,15 +68,28 @@ class main
       {
         Personagem aux = new Personagem();
         aux.Cadastrar();
+        aux.PersonagemArtefato("Flor", Artefatos, 0);
+        aux.PersonagemArtefato("Pena", Artefatos, 1);
+        aux.PersonagemArtefato("Relogio", Artefatos, 2);
+        aux.PersonagemArtefato("Calice", Artefatos, 3);
+        aux.PersonagemArtefato("Tiara", Artefatos, 4);
+        
         Lista_Personagens.Inserir(aux);
       }
       if (run == 2)
       {  
-        run = 0;
+        Artefato aux0 = new Artefato();
+        aux0.CadastrarArtefato();
+        Artefatos.Inserir(aux0);
       }
       if (run == 3)
       {
-        Personagem[] aux1 = new Personagem[Lista_Personagens.Qtd];
+                                    
+        Console.WriteLine("===============================");
+        Console.WriteLine("            Personagens");
+        Console.WriteLine("===============================");
+        Console.WriteLine();
+        /*Personagem[] aux1 = new Personagem[Lista_Personagens.Qtd];
         int i = 0;
         foreach (Personagem p in Lista_Personagens.Listar())
         {
@@ -84,10 +97,16 @@ class main
           i++;
         }
         Array.Sort(aux1);
-        foreach (Personagem p in aux1)
+         */
+
+        int contador1 = 0;
+        foreach (Personagem p in Lista_Personagens.Listar())
         {
-          Console.WriteLine(p);
+          Console.WriteLine($"[{contador1+1}] {p.Nome}");
+          contador1++;
         }
+        Console.WriteLine();
+        Console.WriteLine("Digite:");
         
       }
       if (run == 4)
@@ -103,13 +122,17 @@ class main
         Console.WriteLine("[3] RELOGIO");
         Console.WriteLine("[4] CALICE");
         Console.WriteLine("[5] TIARA");
+        Console.WriteLine("[99] Menu");
         
         Console.WriteLine();
         Console.WriteLine("Digite:");
         int status = int.Parse(Console.ReadLine());
         Console.WriteLine();
         Console.WriteLine("===============================");
-
+        if (status == 99)
+        {
+          continue;
+        }
         if (status == 0)
         {
           foreach (Artefato a in Artefatos.Listar())
@@ -119,9 +142,63 @@ class main
         }
         if (status == 1)
         {
-          foreach (Artefato a in Artefatos.BuscarArtefato("FLAT HP"))
+          int aux1 = 0;
+          foreach (Artefato a in Artefatos.Listar())
           {
-            if ( a.Type == "Flor") Console.WriteLine(a);
+            if ( a.Type == "Flor") 
+            {
+              Console.WriteLine($"[{aux1+1}] {a}");
+              aux1++;
+            }
+          }
+        }
+        if (status == 2)
+        {
+          int aux2 = 0;
+          foreach (Artefato a in Artefatos.Listar())
+          {
+            if ( a.Type == "Pena") 
+            {
+              Console.WriteLine($"[{aux2+1}] {a}");
+              aux2++;
+            }
+          }
+        }
+        if (status == 3)
+        {
+                            
+          int aux3 = 0;
+          foreach (Artefato a in Artefatos.Listar())
+          {
+            if ( a.Type == "Relogio") 
+            {
+              Console.WriteLine($"[{aux3+1}] {a}");
+              aux3++;
+            }
+          }
+        }
+        if (status == 4)
+        {
+          int aux4 = 0;
+          foreach (Artefato a in Artefatos.Listar())
+          {
+            if ( a.Type == "Calice") 
+            {
+              Console.WriteLine($"[{aux4+1}] {a}");
+              aux4++;
+            }
+          }
+        }
+        if (status == 5)
+        {
+          int aux5 = 0;
+          foreach (Artefato a in Artefatos.Listar())
+          {
+            if ( a.Type == "Tiara") 
+            {
+              Console.WriteLine($"[{aux5+1}] {a}");
+              aux5++;
+            }
           }
         }
         

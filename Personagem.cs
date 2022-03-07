@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-class Personagem : IComparable
+class Personagem : IComparable<Personagem>
 {
   
   public string Nome { get ; set; }
@@ -31,23 +31,28 @@ class Personagem : IComparable
     {Pena}\nArtefato Relogio:
     {Relogio}\nArtefato Tiara:
     {Tiara}\nArtefato Cálice:
-    {Calice}";
+    {Calice}\n===============================";
   }
   public void Cadastrar()
   {
     Console.WriteLine("Informaçoes do Seu Personagem");
     Console.Write("Nome: ");
     this.Nome = Console.ReadLine();
-    Console.Write("Type: ");
-    this.Type = Console.ReadLine();
-    
+    Console.Write("Level: ");
+    this.Level = int.Parse(Console.ReadLine());
+    Console.WriteLine("Digite para o tipo:\n[1] Hydro\n[2] Pyro\n[3] Cryo\n[4] Electro\n[5] Geo\n[6] Anemo");
+    Console.Write("Digite: ");
+    int TypeC = int.Parse(Console.ReadLine());
+    if (TypeC == 1) Type = "Hydro";
+    if (TypeC == 2) Type = "Pyro";
+    if (TypeC == 3) Type = "Cryo";
+    if (TypeC == 4) Type = "Electro";
+    if (TypeC == 5) Type = "Geo";
+    if (TypeC == 6) Type = "Anemo";
   }
-  public int CompareTo(object obj)
+  public int CompareTo(Personagem Obj)
   {
-    Personagem x = this;
-    Personagem y = (Personagem) obj;
-
-    return x.Nome.CompareTo(y.Nome);
+    return Nome.CompareTo(Obj.Nome);
   }
   public int MoraXP()
   {
@@ -166,12 +171,38 @@ class Personagem : IComparable
 
     return x;
   }
-}
-
-class NomeComparer : IComparer<Personagem>
-{
-  public int Compare(Personagem x, Personagem y)
+  public void PersonagemArtefato(string T, Colecao<Artefato> Aux, int i)
   {
-    return x.Nome.CompareTo(y.Nome);
+    int contador = 0;
+        foreach (Artefato a in Aux.Listar())
+          {
+            if ( a.Type == T) 
+            {
+              Console.WriteLine($"[{contador+1}] {a}");
+              contador++;
+            }
+          }
+        if (contador == 0)
+        {
+          Console.WriteLine($"Cadastre uma {T} no MENU.");
+        }
+        else
+        {
+          contador = 0;
+          Console.WriteLine("Digite o valor informado conjunto ao artefato:");
+          int artefato_escolhido = int.Parse(Console.ReadLine());
+          foreach (Artefato a in Aux.Listar())
+          {
+            if ( artefato_escolhido == contador) 
+            {
+              if (i == 0) this.Flor = a;
+              if (i == 1) this.Pena = a;
+              if (i == 2) this.Relogio = a;
+              if (i == 3) this.Calice = a;
+              if (i == 4) this.Tiara = a;
+            }
+            contador++;
+          }
+        }
   }
 }
