@@ -54,7 +54,7 @@ class Personagem : IComparable<Personagem>
   {
     return Nome.CompareTo(Obj.Nome);
   }
-  public int MoraXP()
+  public int MoraXp()
   {
     int x = this.Level/10;
 
@@ -157,17 +157,8 @@ class Personagem : IComparable<Personagem>
       this.Boss = 20;
   
     }
-      if ( x == 9 )
-    {
-      this.Mora = 0;
-      this.Xp = 0;
-      this.Lasca = 0;
-      this.Fragmento = 0;
-      this.Pedaco = 0;
-      this.Gema = 0;
-      this.Boss = 46;
-  
-    }
+  Console.WriteLine($"{this.Nome} | {this.Type}");
+  Console.WriteLine($"Mora: {this.Mora}\nLivro 20k x Xp: {this.Xp}\nLasca: {this.Lasca}\nFragmento: {this.Fragmento}\nPedaço: {this.Pedaco}\nGema: {this.Gema}\nBoss: {this.Boss}");
 
     return x;
   }
@@ -184,7 +175,7 @@ class Personagem : IComparable<Personagem>
           }
         if (contador == 0)
         {
-          Console.WriteLine($"Cadastre uma {T} no MENU.");
+          Console.WriteLine($"Cadastre um/a {T} no MENU.");
         }
         else
         {

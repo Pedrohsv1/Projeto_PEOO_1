@@ -48,22 +48,8 @@ class main
 
     while (run != 00)
     {
-      Console.WriteLine("===============================");
-      Console.WriteLine("              Menu");
-      Console.WriteLine("===============================");
-      Console.WriteLine();
-      Console.WriteLine("[1] Cadastrar Personagem");
-      Console.WriteLine("[2] Cadastrar Artefato");
-      Console.WriteLine("[3] Listar Personagens");
-      Console.WriteLine("[4] Listar Artefatos");
-      Console.WriteLine("[5] Tabela Personagem");
-      Console.WriteLine("[00] Sair");
-      Console.WriteLine();
-      Console.WriteLine("Digite:");
-      run = int.Parse(Console.ReadLine());
-      Console.WriteLine("===============================");
-      Console.WriteLine();
-
+      run = Menu();
+      
       if (run == 1)
       {
         Personagem aux = new Personagem();
@@ -84,33 +70,93 @@ class main
       }
       if (run == 3)
       {
-                                    
-        Console.WriteLine("===============================");
+        MenuPrincipalPersonagem(Lista_Personagens, Artefatos);
+      }
+      if (run == 4)
+      {
+        MenuArtefatos(Artefatos);
+      }
+      
+    }
+  }
+  static public int Menu()
+  {
+      Console.WriteLine("===============================");
+      Console.WriteLine("              Menu");
+      Console.WriteLine("===============================");
+      Console.WriteLine();
+      Console.WriteLine("[1] Cadastrar Personagem");
+      Console.WriteLine("[2] Cadastrar Artefato");
+      Console.WriteLine("[3] Listar Personagens");
+      Console.WriteLine("[4] Listar Artefatos");
+      Console.WriteLine("[5] Tabela Personagem");
+      Console.WriteLine("[00] Sair");
+      Console.WriteLine();
+      Console.WriteLine("Digite:");
+      int M = int.Parse(Console.ReadLine());
+      Console.WriteLine("===============================");
+      Console.WriteLine();
+
+      return M;
+  }
+  static public void MenuPrincipalPersonagem(Colecao<Personagem> Perso, Colecao<Artefato> a)
+  {
+    Console.WriteLine("===============================");
         Console.WriteLine("            Personagens");
         Console.WriteLine("===============================");
         Console.WriteLine();
-        /*Personagem[] aux1 = new Personagem[Lista_Personagens.Qtd];
+        Personagem[] aux1 = new Personagem[Perso.Qtd];
         int i = 0;
-        foreach (Personagem p in Lista_Personagens.Listar())
+        foreach (Personagem p in Perso.Listar())
         {
           aux1[i] = p;
           i++;
         }
         Array.Sort(aux1);
-         */
-
         int contador1 = 0;
-        foreach (Personagem p in Lista_Personagens.Listar())
+        foreach (Personagem p in aux1)
         {
           Console.WriteLine($"[{contador1+1}] {p.Nome}");
           contador1++;
         }
         Console.WriteLine();
         Console.WriteLine("Digite:");
+        int EscolhaPersonagem = int.Parse(Console.ReadLine());
+
+        MenuSubPersonagem(aux1[EscolhaPersonagem - 1], a);
+
         
-      }
-      if (run == 4)
-      {
+  }
+  static public void MenuSubPersonagem(Personagem p, Colecao<Artefato> a)
+  {
+        Console.WriteLine("[0] Mostrar");
+        Console.WriteLine("[1] Artefatos");
+        Console.WriteLine("[2] Materiais de Level");
+        Console.WriteLine("[3] Tabela");
+        Console.WriteLine("[99] Voltar");
+
+        Console.WriteLine();
+        Console.WriteLine("Digite:");
+        int MenuPersonagem = int.Parse(Console.ReadLine());
+        
+        if (MenuPersonagem == 0)
+        {
+          Console.WriteLine(p);
+          MenuSubPersonagem(p, a);
+        }
+        if (MenuPersonagem == 1)
+        {
+          MenuArtPersonagem(p, a);
+        }
+        if (MenuPersonagem == 2)
+        {
+          p.MoraXp();
+          MenuSubPersonagem(p, a);
+        }
+        
+  }
+  static public void MenuArtefatos(Colecao<Artefato> Artefa)
+  {
         Console.WriteLine("===============================");
         Console.WriteLine("            Artefatos");
         Console.WriteLine("===============================");
@@ -131,19 +177,20 @@ class main
         Console.WriteLine("===============================");
         if (status == 99)
         {
-          continue;
+          Menu();
         }
         if (status == 0)
         {
-          foreach (Artefato a in Artefatos.Listar())
+          foreach (Artefato a in Artefa.Listar())
           {
             Console.WriteLine(a);
           }
+          MenuArtefatos(Artefa);
         }
         if (status == 1)
         {
           int aux1 = 0;
-          foreach (Artefato a in Artefatos.Listar())
+          foreach (Artefato a in Artefa.Listar())
           {
             if ( a.Type == "Flor") 
             {
@@ -151,11 +198,12 @@ class main
               aux1++;
             }
           }
+          MenuArtefatos(Artefa);
         }
         if (status == 2)
         {
           int aux2 = 0;
-          foreach (Artefato a in Artefatos.Listar())
+          foreach (Artefato a in Artefa.Listar())
           {
             if ( a.Type == "Pena") 
             {
@@ -163,12 +211,13 @@ class main
               aux2++;
             }
           }
+          MenuArtefatos(Artefa);
         }
         if (status == 3)
         {
                             
           int aux3 = 0;
-          foreach (Artefato a in Artefatos.Listar())
+          foreach (Artefato a in Artefa.Listar())
           {
             if ( a.Type == "Relogio") 
             {
@@ -176,11 +225,12 @@ class main
               aux3++;
             }
           }
+          MenuArtefatos(Artefa);;
         }
         if (status == 4)
         {
           int aux4 = 0;
-          foreach (Artefato a in Artefatos.Listar())
+          foreach (Artefato a in Artefa.Listar())
           {
             if ( a.Type == "Calice") 
             {
@@ -188,11 +238,12 @@ class main
               aux4++;
             }
           }
+          MenuArtefatos(Artefa);
         }
         if (status == 5)
         {
           int aux5 = 0;
-          foreach (Artefato a in Artefatos.Listar())
+          foreach (Artefato a in Artefa.Listar())
           {
             if ( a.Type == "Tiara") 
             {
@@ -200,10 +251,83 @@ class main
               aux5++;
             }
           }
+          MenuArtefatos(Artefa);
         }
-        
-      }
-      
+  }
+  public static void MenuArtPersonagem(Personagem p, Colecao<Artefato> a)
+  {
+          Console.WriteLine("[0] Mostrar");
+          Console.WriteLine("[1] Flor");
+          Console.WriteLine("[2] Pena");
+          Console.WriteLine("[3] Calice");
+          Console.WriteLine("[4] Relogio");
+          Console.WriteLine("[5] Tiara");
+          Console.WriteLine("[99] Menu");
+
+          Console.WriteLine();
+          Console.WriteLine("Digite:");
+          int MenuAP = int.Parse(Console.ReadLine());
+          Console.WriteLine("===============================");
+
+          if ( MenuAP == 0 )
+          {
+            Console.WriteLine(p.Flor);
+            Console.WriteLine(p.Pena);
+            Console.WriteLine(p.Relogio);
+            Console.WriteLine(p.Calice);
+            Console.WriteLine(p.Tiara);
+          }
+          if ( MenuAP == 1 )
+          {
+            MenuSubArtPersonagem( p, p.Flor, a, 0);
+            
+          }
+          if ( MenuAP == 2 )
+          {
+            MenuSubArtPersonagem( p, p.Pena, a, 1);
+            
+          }
+          if ( MenuAP == 3 )
+          {
+            MenuSubArtPersonagem( p, p.Calice, a, 3);
+            
+          }
+          if ( MenuAP == 4 )
+          {
+            MenuSubArtPersonagem( p, p.Relogio, a, 2);
+            
+          }
+          if ( MenuAP == 5 )
+          {
+            MenuSubArtPersonagem( p, p.Tiara, a, 4);
+            
+          }
+  }
+  public static void MenuSubArtPersonagem(Personagem p, Artefato a, Colecao<Artefato> Art, int x)
+  {
+    Console.WriteLine($"{a.Type} ->");
+    Console.WriteLine("[0] Mostrar");
+    Console.WriteLine("[1] Trocar");
+    Console.WriteLine("[99] Voltar");
+
+    Console.WriteLine();
+    Console.WriteLine("Digite:");
+    int auxSAP = int.Parse(Console.ReadLine());
+    Console.WriteLine("===============================");
+    
+    if ( auxSAP == 0)
+    {
+      Console.WriteLine(a);
+      MenuSubArtPersonagem(p, a, Art, x);
+    }
+    if ( auxSAP == 1 )
+    {
+      p.PersonagemArtefato( a.Type, Art, x);
+      MenuSubArtPersonagem(p, a, Art, x);
+    }
+    if ( auxSAP == 99 )
+    {
+      MenuArtPersonagem( p, Art);
     }
   }
 }
