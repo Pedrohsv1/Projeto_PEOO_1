@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+
 
 class Personagem : IComparable<Personagem>
 {
@@ -157,8 +157,10 @@ class Personagem : IComparable<Personagem>
       this.Boss = 20;
   
     }
+  Console.WriteLine();  
   Console.WriteLine($"{this.Nome} | {this.Type}");
   Console.WriteLine($"Mora: {this.Mora}\nLivro 20k x Xp: {this.Xp}\nLasca: {this.Lasca}\nFragmento: {this.Fragmento}\nPedaço: {this.Pedaco}\nGema: {this.Gema}\nBoss: {this.Boss}");
+  Console.WriteLine();  
 
     return x;
   }
@@ -184,15 +186,20 @@ class Personagem : IComparable<Personagem>
           int artefato_escolhido = int.Parse(Console.ReadLine());
           foreach (Artefato a in Aux.Listar())
           {
-            if ( artefato_escolhido == contador) 
+            if ( a.Type == T)
             {
-              if (i == 0) this.Flor = a;
-              if (i == 1) this.Pena = a;
-              if (i == 2) this.Relogio = a;
-              if (i == 3) this.Calice = a;
-              if (i == 4) this.Tiara = a;
+              if ( artefato_escolhido - 1 == contador) 
+              {
+                Console.WriteLine(a);
+                if (i == 0) this.Flor = a;
+                if (i == 1) this.Pena = a;
+                if (i == 2) this.Relogio = a;
+                if (i == 3) this.Calice = a;
+                if (i == 4) this.Tiara = a;
+              }
+              contador++;
             }
-            contador++;
+            
           }
         }
   }

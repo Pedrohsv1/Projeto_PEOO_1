@@ -1,18 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+
 
 class main
 {
   static void Main()
   {
     int run = -1;
-    Console.WriteLine("===============");
-    Console.WriteLine("Anlyzer Genshin");
-    Console.WriteLine("================");
+    Console.WriteLine("===============================");
+    Console.WriteLine("       Anlayzer Genshin");
+    Console.WriteLine("===============================");
     Console.WriteLine();
+    
     Artefato Arte1 = new Artefato{Name = "Trupe Itinerante", Type = "Flor", MainStatus = "FLAT HP", Status_1 = "HP%", Status_2 = "ATQ%",Status_3 = "CRIT RATE",Status_4 = "CRIT DMG",ValueMainStatus = 46, ValueStatus_1 = 10, ValueStatus_2 = 8.7, ValueStatus_3 = 12.5, ValueStatus_4 = 6.3,};
+
 
     Artefato Arte2 = new Artefato{Name = "Trupe Itinerante", Type = "Relogio", MainStatus = "FLAT HP", Status_1 = "HP%", Status_2 = "ATQ%",Status_3 = "CRIT RATE",Status_4 = "CRIT DMG", ValueMainStatus = 46, ValueStatus_1 = 10, ValueStatus_2 = 8.7, ValueStatus_3 = 12.5, ValueStatus_4 = 6.3,};
 
@@ -89,7 +91,6 @@ class main
       Console.WriteLine("[2] Cadastrar Artefato");
       Console.WriteLine("[3] Listar Personagens");
       Console.WriteLine("[4] Listar Artefatos");
-      Console.WriteLine("[5] Tabela Personagem");
       Console.WriteLine("[00] Sair");
       Console.WriteLine();
       Console.WriteLine("Digite:");
@@ -101,7 +102,7 @@ class main
   }
   static public void MenuPrincipalPersonagem(Colecao<Personagem> Perso, Colecao<Artefato> a)
   {
-    Console.WriteLine("===============================");
+        Console.WriteLine("===============================");
         Console.WriteLine("            Personagens");
         Console.WriteLine("===============================");
         Console.WriteLine();
@@ -119,20 +120,40 @@ class main
           Console.WriteLine($"[{contador1+1}] {p.Nome}");
           contador1++;
         }
+        Console.WriteLine("[99] Voltar");
         Console.WriteLine();
         Console.WriteLine("Digite:");
+    
         int EscolhaPersonagem = int.Parse(Console.ReadLine());
-
-        MenuSubPersonagem(aux1[EscolhaPersonagem - 1], a);
+        if ( EscolhaPersonagem == 99)
+        {
+          Console.WriteLine();
+        }
+        else
+        {
+          if ( EscolhaPersonagem > contador1 || EscolhaPersonagem < 1)
+          {
+            Console.WriteLine("Valor Inválido");
+            MenuPrincipalPersonagem(Perso, a);
+          }
+          else
+          {
+            MenuSubPersonagem(aux1[EscolhaPersonagem - 1], a, Perso);
+          }
+        }
+        
+        
 
         
   }
-  static public void MenuSubPersonagem(Personagem p, Colecao<Artefato> a)
+  static public void MenuSubPersonagem(Personagem p, Colecao<Artefato> a, Colecao<Personagem> Perso)
   {
         Console.WriteLine("[0] Mostrar");
         Console.WriteLine("[1] Artefatos");
         Console.WriteLine("[2] Materiais de Level");
-        Console.WriteLine("[3] Tabela");
+        Console.WriteLine("[3] Tabela (Em desenvolvimento)");
+        Console.WriteLine("[4] Excluir");
+        Console.WriteLine("[5] Mudar Dados");
         Console.WriteLine("[99] Voltar");
 
         Console.WriteLine();
@@ -142,17 +163,60 @@ class main
         if (MenuPersonagem == 0)
         {
           Console.WriteLine(p);
-          MenuSubPersonagem(p, a);
+          MenuSubPersonagem(p, a, Perso);
         }
-        if (MenuPersonagem == 1)
-        {
-          MenuArtPersonagem(p, a);
+        else {
+          if (MenuPersonagem == 1)
+          {
+            MenuArtPersonagem(p, a, Perso);
+          }
+          else {
+            if (MenuPersonagem == 2)
+            {
+            p.MoraXp();
+            MenuSubPersonagem(p, a, Perso);
+            }
+            else
+            {
+              if (MenuPersonagem ==  4)
+              {
+                Perso.Excluir(p);
+              }
+              else
+              {
+                if (MenuPersonagem == 5)
+                {
+                  Personagem aux = new Personagem();
+                  aux.Cadastrar();
+                  aux.PersonagemArtefato("Flor", a, 0);
+                  aux.PersonagemArtefato("Pena", a, 1);
+                  aux.PersonagemArtefato("Relogio", a, 2);
+                  aux.PersonagemArtefato("Calice", a, 3);
+                  aux.PersonagemArtefato("Tiara", a, 4);
+                  Perso.Inserir(aux);
+                  Perso.Excluir(p);
+                  MenuPrincipalPersonagem(Perso, a);
+                }
+                else
+                {
+                  if (MenuPersonagem == 99)
+                  {
+                    MenuPrincipalPersonagem(Perso, a);
+                  }
+                  else
+                  {
+                    Console.WriteLine("Valor Inválido");
+                    MenuSubPersonagem(p, a, Perso);
+                  }
+                }
+              }
+            }
+          }
         }
-        if (MenuPersonagem == 2)
-        {
-          p.MoraXp();
-          MenuSubPersonagem(p, a);
-        }
+        
+        
+        
+        
         
   }
   static public void MenuArtefatos(Colecao<Artefato> Artefa)
@@ -174,16 +238,58 @@ class main
         Console.WriteLine("Digite:");
         int status = int.Parse(Console.ReadLine());
         Console.WriteLine();
-        Console.WriteLine("===============================");
-        if (status == 99)
-        {
-          Menu();
-        }
+    
+        int contador = 0;
         if (status == 0)
         {
+          int aux0 = 1;
           foreach (Artefato a in Artefa.Listar())
           {
-            Console.WriteLine(a);
+            Console.WriteLine($"[{aux0}] {a}");
+            aux0++;
+          }
+          Console.WriteLine("Digite:");
+          int MenuA = int.Parse(Console.ReadLine());
+          
+          foreach (Artefato a in Artefa.Listar())
+          {
+            contador++;
+            if (contador == MenuA)
+            {
+              Console.WriteLine("===============================");
+              Console.WriteLine("[0] Excluir");
+              Console.WriteLine("[1] Mostrar");
+              Console.WriteLine("[2] Alterar Dados");
+              Console.WriteLine("[99] Voltar");
+              Console.WriteLine();
+              Console.WriteLine("Digite:");
+              int AuxMenuA = int.Parse(Console.ReadLine());
+
+              if (AuxMenuA == 0)
+              {
+                Artefa.Excluir(a);
+              }
+              else
+              {
+                if (AuxMenuA == 1)
+                {
+                  Console.WriteLine(a);
+                  
+                }
+                else
+                {
+                  if (AuxMenuA == 2)
+                  {
+                    a.CadastrarArtefato();
+                  }
+                  else
+                  {
+                    MenuArtefatos(Artefa);
+                  }
+                }
+              }
+              
+            }
           }
           MenuArtefatos(Artefa);
         }
@@ -253,8 +359,17 @@ class main
           }
           MenuArtefatos(Artefa);
         }
+        if (status == 99)
+        {
+          Menu();
+        }
+        else
+        {
+          Console.WriteLine("Valor Inválido");
+          MenuArtefatos(Artefa);
+        }
   }
-  public static void MenuArtPersonagem(Personagem p, Colecao<Artefato> a)
+  public static void MenuArtPersonagem(Personagem p, Colecao<Artefato> a, Colecao<Personagem> Perso)
   {
           Console.WriteLine("[0] Mostrar");
           Console.WriteLine("[1] Flor");
@@ -262,7 +377,7 @@ class main
           Console.WriteLine("[3] Calice");
           Console.WriteLine("[4] Relogio");
           Console.WriteLine("[5] Tiara");
-          Console.WriteLine("[99] Menu");
+          Console.WriteLine("[99] Voltar");
 
           Console.WriteLine();
           Console.WriteLine("Digite:");
@@ -276,34 +391,44 @@ class main
             Console.WriteLine(p.Relogio);
             Console.WriteLine(p.Calice);
             Console.WriteLine(p.Tiara);
+            MenuArtPersonagem(p, a, Perso);
           }
           if ( MenuAP == 1 )
           {
-            MenuSubArtPersonagem( p, p.Flor, a, 0);
+            MenuSubArtPersonagem( p, p.Flor, a, 0, Perso);
             
           }
           if ( MenuAP == 2 )
           {
-            MenuSubArtPersonagem( p, p.Pena, a, 1);
+            MenuSubArtPersonagem( p, p.Pena, a, 1, Perso);
             
           }
           if ( MenuAP == 3 )
           {
-            MenuSubArtPersonagem( p, p.Calice, a, 3);
+            MenuSubArtPersonagem( p, p.Calice, a, 3, Perso);
             
           }
           if ( MenuAP == 4 )
           {
-            MenuSubArtPersonagem( p, p.Relogio, a, 2);
+            MenuSubArtPersonagem( p, p.Relogio, a, 2, Perso);
             
           }
           if ( MenuAP == 5 )
           {
-            MenuSubArtPersonagem( p, p.Tiara, a, 4);
+            MenuSubArtPersonagem( p, p.Tiara, a, 4, Perso);
             
           }
+          if ( MenuAP == 99 )
+          {
+            MenuSubPersonagem( p, a, Perso);
+          }
+          else
+          {
+            Console.WriteLine("Valor Inválido");
+            MenuArtPersonagem(p, a, Perso);
+          }
   }
-  public static void MenuSubArtPersonagem(Personagem p, Artefato a, Colecao<Artefato> Art, int x)
+  public static void MenuSubArtPersonagem(Personagem p, Artefato a, Colecao<Artefato> Art, int x, Colecao<Personagem> Perso)
   {
     Console.WriteLine($"{a.Type} ->");
     Console.WriteLine("[0] Mostrar");
@@ -318,16 +443,48 @@ class main
     if ( auxSAP == 0)
     {
       Console.WriteLine(a);
-      MenuSubArtPersonagem(p, a, Art, x);
+      MenuSubArtPersonagem(p, a, Art, x, Perso);
     }
     if ( auxSAP == 1 )
     {
       p.PersonagemArtefato( a.Type, Art, x);
-      MenuSubArtPersonagem(p, a, Art, x);
+      if ( a.Type == "Flor" )
+      {
+        a = p.Flor;
+      }
+      if ( a.Type == "Pena" )
+      {
+        a = p.Pena;
+      }
+      if ( a.Type == "Calice" )
+      {
+        a = p.Calice;
+      }
+      if ( a.Type == "Relogio" )
+      {
+        a = p.Relogio;
+      }
+      if ( a.Type == "Tiara" )
+      {
+        a = p.Tiara;
+      }
+      MenuSubArtPersonagem(p, a, Art, x, Perso);
     }
     if ( auxSAP == 99 )
     {
-      MenuArtPersonagem( p, Art);
+      MenuArtPersonagem( p, Art, Perso);
     }
   }
+  /*static void MenuSubArtefato(string Tipo, Colecao<Artefato> Arte)
+  {
+    foreach (Artefato a in Arte.Listar())
+    {
+      if ( a.Type == Tipo) 
+      {
+        Console.WriteLine($"[{aux2+1}] {a}");
+        aux2++;
+      }
+    }
+    MenuArtefatos(Artefa);
+  } */
 }
