@@ -7,8 +7,7 @@ class main
 {
   static void Main()
   {
-    
-    Console.WriteLine("Texto normal de novo");
+
     int run = -1;
     Console.WriteLine("===============================");
     Console.WriteLine("       Anlayzer Genshin");
@@ -49,7 +48,7 @@ class main
     Artefatos.Inserir(Arte4);
     Artefatos.Inserir(Arte5);
 
-    Console.Clear();
+    
     while (run != 0)
     {
       run = -1;
@@ -73,12 +72,6 @@ class main
           aux.PersonagemArtefato("Relogio", Artefatos, 2);
           aux.PersonagemArtefato("Calice", Artefatos, 3);
           aux.PersonagemArtefato("Tiara", Artefatos, 4);
-          Console.Clear();
-          Console.WriteLine();
-          Console.ForegroundColor = ConsoleColor.DarkGreen;
-          Console.WriteLine("Personagem Cadastrado!");
-          Console.ResetColor();
-          Console.WriteLine();
         }
         catch (Exception)
         {
@@ -89,7 +82,12 @@ class main
           Console.ForegroundColor = ConsoleColor.DarkRed;
           Console.WriteLine("Erro, Tente denovo.");
           Console.ResetColor();
-        }       
+        }      
+        Console.WriteLine();
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
+        Console.WriteLine("Personagem Cadastrado!");
+        Console.ResetColor();
+        Console.WriteLine();
         Lista_Personagens.Inserir(aux);
       }
       if (run == 2)
@@ -189,7 +187,7 @@ class main
           contador1++;
         }
         Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.WriteLine("[0] Voltar ao MENU");
+        Console.WriteLine("[0] Menu");
         Console.ResetColor();
         Console.WriteLine();
     
@@ -228,7 +226,6 @@ class main
         if ( EscolhaPersonagem == 0)
         {
           Console.Clear();
-          Console.WriteLine();
         }
         else
         {
@@ -254,10 +251,36 @@ class main
         Console.ForegroundColor = ConsoleColor.DarkRed;
         Console.WriteLine("[0] Voltar");
         Console.ResetColor();
-
         Console.WriteLine();
-        Console.WriteLine("Digite:");
-        int MenuPersonagem = int.Parse(Console.ReadLine());
+
+
+        int MenuPersonagem = -1;
+        while (MenuPersonagem < 0)
+        {
+          try
+          {
+            Console.WriteLine("Digite:");
+            MenuPersonagem = int.Parse(Console.ReadLine());
+            if (MenuPersonagem < 0 || MenuPersonagem > 6)
+            {
+              Console.WriteLine();
+              Console.ForegroundColor = ConsoleColor.DarkRed;
+              Console.WriteLine("Valor Inválido");
+              Console.ResetColor();
+              Console.WriteLine();
+              MenuPersonagem = -1;
+            }
+          }
+          catch (Exception)
+          {
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("Erro, Tente denovo.");
+            Console.ResetColor();
+            Console.WriteLine();
+          }
+        }
+        
 
         Console.ForegroundColor = ConsoleColor.Magenta;
         Console.WriteLine("===============================");
@@ -334,27 +357,57 @@ class main
   }
   static public void MenuArtefatos(Colecao<Artefato> Artefa)
   {
-        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine("===============================");
+        Console.ResetColor(); 
         Console.WriteLine("            Artefatos");
+        Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine("===============================");
+        Console.ResetColor(); 
         Console.WriteLine();
 
-        Console.WriteLine("[0] TUDO");
-        Console.WriteLine("[1] FLOR");
-        Console.WriteLine("[2] PENA");
-        Console.WriteLine("[3] RELOGIO");
-        Console.WriteLine("[4] CALICE");
-        Console.WriteLine("[5] TIARA");
-        Console.WriteLine("[99] Menu");
-        
+        Console.WriteLine("[1] TUDO");
+        Console.WriteLine("[2] FLOR");
+        Console.WriteLine("[3] PENA");
+        Console.WriteLine("[4] RELOGIO");
+        Console.WriteLine("[5] CALICE");
+        Console.WriteLine("[6] TIARA");
+        Console.ForegroundColor = ConsoleColor.DarkRed;
+        Console.WriteLine("[0] Menu");
+        Console.ResetColor();
         Console.WriteLine();
-        Console.WriteLine("Digite:");
-        int status = int.Parse(Console.ReadLine());
-        Console.WriteLine();
+
+
+        int status = -1;
+        while (status < 0)
+        {
+          try
+          {
+            Console.WriteLine("Digite:");
+            status = int.Parse(Console.ReadLine());
+            Console.WriteLine(status);
+            if (status < 0 || status > 6)
+            {
+              Console.WriteLine();
+              Console.ForegroundColor = ConsoleColor.DarkRed;
+              Console.WriteLine("Valor Inválido");
+              Console.ResetColor();
+              Console.WriteLine();
+              status = -1;
+            }
+          }
+          catch (Exception)
+          {
+            
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("Erro, Tente denovo.");
+            Console.ResetColor();
+            Console.WriteLine();
+          }
+        }
     
         int contador = 0;
-        if (status == 0)
+        if (status == 1)
         {
           int aux0 = 1;
           foreach (Artefato a in Artefa.Listar())
@@ -407,7 +460,7 @@ class main
           }
           MenuArtefatos(Artefa);
         }
-        if (status == 1)
+        if (status == 2)
         {
           int aux1 = 0;
           foreach (Artefato a in Artefa.Listar())
@@ -420,7 +473,7 @@ class main
           }
           MenuArtefatos(Artefa);
         }
-        if (status == 2)
+        if (status == 3)
         {
           int aux2 = 0;
           foreach (Artefato a in Artefa.Listar())
@@ -433,7 +486,7 @@ class main
           }
           MenuArtefatos(Artefa);
         }
-        if (status == 3)
+        if (status == 4)
         {
                             
           int aux3 = 0;
@@ -447,7 +500,7 @@ class main
           }
           MenuArtefatos(Artefa);;
         }
-        if (status == 4)
+        if (status == 5)
         {
           int aux4 = 0;
           foreach (Artefato a in Artefa.Listar())
@@ -460,7 +513,7 @@ class main
           }
           MenuArtefatos(Artefa);
         }
-        if (status == 5)
+        if (status == 6)
         {
           int aux5 = 0;
           foreach (Artefato a in Artefa.Listar())
@@ -473,14 +526,9 @@ class main
           }
           MenuArtefatos(Artefa);
         }
-        if (status == 99)
+        if (status == 0)
         {
           Console.WriteLine();
-        }
-        else
-        {
-          Console.WriteLine("Valor Inválido");
-          MenuArtefatos(Artefa);
         }
   }
   public static void MenuArtPersonagem(Personagem p, Colecao<Artefato> a, Colecao<Personagem> Perso)
@@ -501,9 +549,32 @@ class main
           Console.WriteLine("[0] Voltar");
           Console.ResetColor();
 
-          Console.WriteLine();
-          Console.WriteLine("Digite:");
-          int MenuAP = int.Parse(Console.ReadLine());
+          int MenuAP = -1;
+          while (MenuAP < 0)
+          {
+            try
+            {
+              Console.WriteLine("Digite:");
+              MenuAP = int.Parse(Console.ReadLine());
+              if (MenuAP < 0 || MenuAP > 6)
+              {
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("Valor Inválido");
+                Console.ResetColor();
+                Console.WriteLine();
+                MenuAP = -1;
+              }
+            }
+            catch (Exception)
+            {
+              Console.WriteLine();
+              Console.ForegroundColor = ConsoleColor.DarkRed;
+              Console.WriteLine("Erro, Tente denovo.");
+              Console.ResetColor();
+              Console.WriteLine();
+            }
+          }
     
           Console.ForegroundColor = ConsoleColor.Magenta;
           Console.WriteLine("===============================");
@@ -651,9 +722,32 @@ class main
     Console.WriteLine("[0] Voltar");
     Console.ResetColor();
 
-    Console.WriteLine();
-    Console.WriteLine("Digite:");
-    int auxSAP = int.Parse(Console.ReadLine());
+    int auxSAP = -1;
+    while (auxSAP < 0)
+    {
+      try
+      {
+        Console.WriteLine("Digite:");
+        auxSAP = int.Parse(Console.ReadLine());
+        if (auxSAP < 0 || auxSAP > 2)
+        {
+          Console.WriteLine();
+          Console.ForegroundColor = ConsoleColor.DarkRed;
+          Console.WriteLine("Valor Inválido");
+          Console.ResetColor();
+          Console.WriteLine();
+          auxSAP = -1;
+        }
+      }
+      catch (Exception)
+      {
+        Console.WriteLine();
+        Console.ForegroundColor = ConsoleColor.DarkRed;
+        Console.WriteLine("Erro, Tente denovo.");
+        Console.ResetColor();
+        Console.WriteLine();
+      }
+    }
     
     Console.ForegroundColor = ConsoleColor.Magenta;
     Console.WriteLine("===============================");
@@ -707,9 +801,6 @@ class main
     }
     if ( auxSAP == 0 )
     {
-      Console.ForegroundColor = ConsoleColor.Magenta;
-      Console.WriteLine("===============================");
-      Console.ResetColor();
       Console.Clear();
       MenuArtPersonagem( p, Art, Perso);
     }

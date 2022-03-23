@@ -183,7 +183,7 @@ class Personagem : IComparable<Personagem>
 
     return x;
   }
-  public void PersonagemArtefato(string T, Colecao<Artefato> Aux, int i, bool Mpsa = false)
+  public bool PersonagemArtefato(string T, Colecao<Artefato> Aux, int i, bool Mpsa = false)
   {
     Console.WriteLine();
     Console.WriteLine($"Escolha a/o {T}:");
@@ -202,6 +202,7 @@ class Personagem : IComparable<Personagem>
           Console.ForegroundColor = ConsoleColor.DarkRed;
           Console.WriteLine($"Cadastre um/a {T} no MENU.");
           Console.ResetColor();
+          return false;
         }
         else
         {
@@ -268,5 +269,6 @@ class Personagem : IComparable<Personagem>
             }
           }
         }
+        return false;
   }
 }
