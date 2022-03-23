@@ -23,6 +23,7 @@ class Personagem : IComparable<Personagem>
   public int Gema { get ; set; }
   public int Boss { get ; set; }
 
+
   public override string ToString()
   {
     return $"{Nome} - {Type}\nLevel: {Level}
@@ -31,24 +32,40 @@ class Personagem : IComparable<Personagem>
     {Pena}\nArtefato Relogio:
     {Relogio}\nArtefato Tiara:
     {Tiara}\nArtefato Cálice:
-    {Calice}\n===============================";
+    {Calice}";
   }
   public void Cadastrar()
   {
-    Console.WriteLine("Informaçoes do Seu Personagem");
-    Console.Write("Nome: ");
-    this.Nome = Console.ReadLine();
-    Console.Write("Level: ");
-    this.Level = int.Parse(Console.ReadLine());
-    Console.WriteLine("Digite para o tipo:\n[1] Hydro\n[2] Pyro\n[3] Cryo\n[4] Electro\n[5] Geo\n[6] Anemo");
-    Console.Write("Digite: ");
-    int TypeC = int.Parse(Console.ReadLine());
-    if (TypeC == 1) Type = "Hydro";
-    if (TypeC == 2) Type = "Pyro";
-    if (TypeC == 3) Type = "Cryo";
-    if (TypeC == 4) Type = "Electro";
-    if (TypeC == 5) Type = "Geo";
-    if (TypeC == 6) Type = "Anemo";
+    try
+    {
+      Console.WriteLine("Informaçoes do Seu Personagem:");
+      Console.WriteLine();
+      Console.Write("Nome: ");
+      this.Nome = Console.ReadLine();
+      Console.WriteLine();
+      Console.Write("Level: ");
+      this.Level = int.Parse(Console.ReadLine());
+      Console.WriteLine();
+      Console.WriteLine("Digite para o tipo:\n[1] Hydro\n[2] Pyro\n[3] Cryo\n[4] Electro\n[5] Geo\n[6] Anemo");
+      Console.Write("Digite: ");
+      int TypeC = int.Parse(Console.ReadLine());
+      if (TypeC == 1) Type = "Hydro";
+      if (TypeC == 2) Type = "Pyro";
+      if (TypeC == 3) Type = "Cryo";
+      if (TypeC == 4) Type = "Electro";
+      if (TypeC == 5) Type = "Geo";
+      if (TypeC == 6) Type = "Anemo";
+    }
+    catch (Exception)
+    {
+      Console.WriteLine();
+      Console.ForegroundColor = ConsoleColor.DarkRed;
+      Console.WriteLine("Erro, Tente denovo.");
+      Console.ResetColor();
+      Console.WriteLine();
+      this.Cadastrar();
+    }
+    
   }
   public int CompareTo(Personagem Obj)
   {
@@ -160,12 +177,17 @@ class Personagem : IComparable<Personagem>
   Console.WriteLine();  
   Console.WriteLine($"{this.Nome} | {this.Type}");
   Console.WriteLine($"Mora: {this.Mora}\nLivro 20k x Xp: {this.Xp}\nLasca: {this.Lasca}\nFragmento: {this.Fragmento}\nPedaço: {this.Pedaco}\nGema: {this.Gema}\nBoss: {this.Boss}");
-  Console.WriteLine();  
+  Console.ForegroundColor = ConsoleColor.Magenta;
+  Console.WriteLine("===============================");
+  Console.ResetColor();
 
     return x;
   }
-  public void PersonagemArtefato(string T, Colecao<Artefato> Aux, int i)
+  public void PersonagemArtefato(string T, Colecao<Artefato> Aux, int i, bool Mpsa = false)
   {
+    Console.WriteLine();
+    Console.WriteLine($"Escolha a/o {T}:");
+    Console.WriteLine();
     int contador = 0;
         foreach (Artefato a in Aux.Listar())
           {
@@ -177,29 +199,73 @@ class Personagem : IComparable<Personagem>
           }
         if (contador == 0)
         {
+          Console.ForegroundColor = ConsoleColor.DarkRed;
           Console.WriteLine($"Cadastre um/a {T} no MENU.");
+          Console.ResetColor();
         }
         else
         {
+          int qtd = contador;
           contador = 0;
-          Console.WriteLine("Digite o valor informado conjunto ao artefato:");
-          int artefato_escolhido = int.Parse(Console.ReadLine());
-          foreach (Artefato a in Aux.Listar())
+          int artefato_escolhido = -1;
+          if (Mpsa == false)
           {
-            if ( a.Type == T)
+            Console.WriteLine("[0] Nenhum");
+          }
+          try
+          {
+            while (artefato_escolhido < 0 || artefato_escolhido > qtd)
             {
-              if ( artefato_escolhido - 1 == contador) 
+              Console.WriteLine("Digite o valor informado conjunto ao artefato:");
+              artefato_escolhido = int.Parse(Console.ReadLine());
+              if (Mpsa == true &&  artefato_escolhido == 0)
               {
-                Console.WriteLine(a);
-                if (i == 0) this.Flor = a;
-                if (i == 1) this.Pena = a;
-                if (i == 2) this.Relogio = a;
-                if (i == 3) this.Calice = a;
-                if (i == 4) this.Tiara = a;
+                 artefato_escolhido = -1;
               }
-              contador++;
             }
             
+          }
+          catch (Exception)
+          {
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("Erro, Tente denovo.");
+            Console.ResetColor();
+            Console.WriteLine();
+            this.PersonagemArtefato(T, Aux, i);
+          }
+          if (artefato_escolhido == 0)
+          {
+            if (Mpsa == false)
+            {
+              Console.WriteLine();
+              Console.ForegroundColor = ConsoleColor.DarkGreen;
+              Console.WriteLine("Nenhum Escolhido.");
+              Console.ResetColor();
+            }
+          }
+          else
+          {
+            foreach (Artefato a in Aux.Listar())
+            {
+              if ( a.Type == T)
+              {
+                if ( artefato_escolhido - 1 == contador) 
+                {
+                  Console.WriteLine();
+                  Console.ForegroundColor = ConsoleColor.DarkGreen;
+                  Console.WriteLine("    Artefato escolhido com SUCESSO!");
+                  Console.ResetColor();
+                  Console.WriteLine(a);
+                  if (i == 0) this.Flor = a;
+                  if (i == 1) this.Pena = a;
+                  if (i == 2) this.Relogio = a;
+                  if (i == 3) this.Calice = a;
+                  if (i == 4) this.Tiara = a;
+                }
+                contador++;
+              }
+            }
           }
         }
   }

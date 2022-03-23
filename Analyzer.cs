@@ -7,6 +7,8 @@ class main
 {
   static void Main()
   {
+    
+    Console.WriteLine("Texto normal de novo");
     int run = -1;
     Console.WriteLine("===============================");
     Console.WriteLine("       Anlayzer Genshin");
@@ -42,70 +44,136 @@ class main
 
     Colecao<Artefato> Artefatos = new Colecao<Artefato>();
 
-    Artefatos.Inserir(Arte1);
     Artefatos.Inserir(Arte2);
     Artefatos.Inserir(Arte3);
     Artefatos.Inserir(Arte4);
     Artefatos.Inserir(Arte5);
 
-    while (run != 00)
+    Console.Clear();
+    while (run != 0)
     {
-      run = Menu();
+      run = -1;
+      while(run == -1) 
+      {
+        run = Menu();
+      }
       
       if (run == 1)
       {
         Personagem aux = new Personagem();
-        aux.Cadastrar();
-        aux.PersonagemArtefato("Flor", Artefatos, 0);
-        aux.PersonagemArtefato("Pena", Artefatos, 1);
-        aux.PersonagemArtefato("Relogio", Artefatos, 2);
-        aux.PersonagemArtefato("Calice", Artefatos, 3);
-        aux.PersonagemArtefato("Tiara", Artefatos, 4);
         
+        try
+        {
+          Console.Clear();
+          aux.Cadastrar();
+          Console.WriteLine();
+          Console.WriteLine("Artefatos =====================");
+          aux.PersonagemArtefato("Flor", Artefatos, 0);
+          aux.PersonagemArtefato("Pena", Artefatos, 1);
+          aux.PersonagemArtefato("Relogio", Artefatos, 2);
+          aux.PersonagemArtefato("Calice", Artefatos, 3);
+          aux.PersonagemArtefato("Tiara", Artefatos, 4);
+          Console.Clear();
+          Console.WriteLine();
+          Console.ForegroundColor = ConsoleColor.DarkGreen;
+          Console.WriteLine("Personagem Cadastrado!");
+          Console.ResetColor();
+          Console.WriteLine();
+        }
+        catch (Exception)
+        {
+          Console.ForegroundColor = ConsoleColor.DarkBlue;
+          Console.WriteLine("===============================");
+          Console.ResetColor();
+          
+          Console.ForegroundColor = ConsoleColor.DarkRed;
+          Console.WriteLine("Erro, Tente denovo.");
+          Console.ResetColor();
+        }       
         Lista_Personagens.Inserir(aux);
       }
       if (run == 2)
       {  
+        Console.Clear();
         Artefato aux0 = new Artefato();
         aux0.CadastrarArtefato();
         Artefatos.Inserir(aux0);
+        Console.WriteLine();
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
+        Console.WriteLine("Artefato Cadastrado!");
+        Console.ResetColor();
+        Console.WriteLine();
       }
       if (run == 3)
       {
+        Console.Clear();
         MenuPrincipalPersonagem(Lista_Personagens, Artefatos);
       }
       if (run == 4)
       {
+        Console.Clear();
         MenuArtefatos(Artefatos);
+      }
+      if (run == 0)
+      {
+        Console.WriteLine("VAI SAIR MESMO? otario boe.");
       }
       
     }
   }
   static public int Menu()
   {
+      Console.ForegroundColor = ConsoleColor.DarkBlue;
       Console.WriteLine("===============================");
+      Console.ResetColor();
       Console.WriteLine("              Menu");
+      Console.ForegroundColor = ConsoleColor.DarkBlue;
       Console.WriteLine("===============================");
+      Console.ResetColor();
       Console.WriteLine();
       Console.WriteLine("[1] Cadastrar Personagem");
       Console.WriteLine("[2] Cadastrar Artefato");
       Console.WriteLine("[3] Listar Personagens");
       Console.WriteLine("[4] Listar Artefatos");
-      Console.WriteLine("[00] Sair");
+      Console.ForegroundColor = ConsoleColor.DarkRed;
+      Console.WriteLine("[0] Sair");
+      Console.ResetColor();
       Console.WriteLine();
       Console.WriteLine("Digite:");
-      int M = int.Parse(Console.ReadLine());
-      Console.WriteLine("===============================");
-      Console.WriteLine();
-
+      int M = -1;
+      try
+      {
+        M = int.Parse(Console.ReadLine());
+      }
+      catch (Exception)
+      {
+        Console.ForegroundColor = ConsoleColor.DarkBlue;
+        Console.WriteLine("===============================");
+        Console.ResetColor();
+        
+        Console.ForegroundColor = ConsoleColor.DarkRed;
+        Console.WriteLine("Erro, Tente denovo.");
+        Console.ResetColor();
+      }
+      if (M != -1)
+      {
+        Console.ForegroundColor = ConsoleColor.DarkBlue;
+        Console.WriteLine("===============================");
+        Console.ResetColor();
+      }
+      
       return M;
   }
   static public void MenuPrincipalPersonagem(Colecao<Personagem> Perso, Colecao<Artefato> a)
   {
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Magenta;
         Console.WriteLine("===============================");
+        Console.ResetColor();
         Console.WriteLine("            Personagens");
+        Console.ForegroundColor = ConsoleColor.Magenta;
         Console.WriteLine("===============================");
-        Console.WriteLine();
+        Console.ResetColor();
         Personagem[] aux1 = new Personagem[Perso.Qtd];
         int i = 0;
         foreach (Personagem p in Perso.Listar())
@@ -120,71 +188,115 @@ class main
           Console.WriteLine($"[{contador1+1}] {p.Nome}");
           contador1++;
         }
-        Console.WriteLine("[99] Voltar");
+        Console.ForegroundColor = ConsoleColor.DarkRed;
+        Console.WriteLine("[0] Voltar ao MENU");
+        Console.ResetColor();
         Console.WriteLine();
-        Console.WriteLine("Digite:");
     
-        int EscolhaPersonagem = int.Parse(Console.ReadLine());
-        if ( EscolhaPersonagem == 99)
+        int EscolhaPersonagem = -1;
+        while (EscolhaPersonagem < 0)
         {
+          try
+          {
+            Console.WriteLine("Digite:");
+            EscolhaPersonagem = int.Parse(Console.ReadLine());
+            if (EscolhaPersonagem < 0 || EscolhaPersonagem > i)
+            {
+              Console.WriteLine();
+              Console.ForegroundColor = ConsoleColor.DarkRed;
+              Console.WriteLine("Valor Inválido");
+              Console.ResetColor();
+              Console.WriteLine();
+              EscolhaPersonagem = -1;
+            }
+          }
+          catch (Exception)
+          {
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("Erro, Tente denovo.");
+            Console.ResetColor();
+            Console.WriteLine();
+          }
+        }
+        
+
+        Console.ForegroundColor = ConsoleColor.Magenta;
+        Console.WriteLine("===============================");
+        Console.ResetColor(); 
+    
+        if ( EscolhaPersonagem == 0)
+        {
+          Console.Clear();
           Console.WriteLine();
         }
         else
         {
-          if ( EscolhaPersonagem > contador1 || EscolhaPersonagem < 1)
-          {
-            Console.WriteLine("Valor Inválido");
-            MenuPrincipalPersonagem(Perso, a);
-          }
-          else
-          {
-            MenuSubPersonagem(aux1[EscolhaPersonagem - 1], a, Perso);
-          }
-        }
-        
-        
+          Console.Clear();
+          MenuSubPersonagem(aux1[EscolhaPersonagem - 1], a, Perso);
 
-        
+        }
+          
   }
   static public void MenuSubPersonagem(Personagem p, Colecao<Artefato> a, Colecao<Personagem> Perso)
-  {
-        Console.WriteLine("[0] Mostrar");
-        Console.WriteLine("[1] Artefatos");
-        Console.WriteLine("[2] Materiais de Level");
-        Console.WriteLine("[3] Tabela (Em desenvolvimento)");
-        Console.WriteLine("[4] Excluir");
-        Console.WriteLine("[5] Mudar Dados");
-        Console.WriteLine("[99] Voltar");
+  {     
+        Console.WriteLine();
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine($"Personagem: {p.Nome}");
+        Console.ResetColor();
+        Console.WriteLine();
+        Console.WriteLine("[1] Mostrar");
+        Console.WriteLine("[2] Artefatos");
+        Console.WriteLine("[3] Materiais de Level");
+        Console.WriteLine("[4] Tabela (Em desenvolvimento)");
+        Console.WriteLine("[5] Excluir");
+        Console.WriteLine("[6] Mudar Dados");
+        Console.ForegroundColor = ConsoleColor.DarkRed;
+        Console.WriteLine("[0] Voltar");
+        Console.ResetColor();
 
         Console.WriteLine();
         Console.WriteLine("Digite:");
         int MenuPersonagem = int.Parse(Console.ReadLine());
+
+        Console.ForegroundColor = ConsoleColor.Magenta;
+        Console.WriteLine("===============================");
+        Console.ResetColor();
         
-        if (MenuPersonagem == 0)
+        if (MenuPersonagem == 1)
         {
+          Console.Clear();
+          Console.ForegroundColor = ConsoleColor.Magenta;
+          Console.WriteLine("===============================");
+          Console.ResetColor();
+          Console.WriteLine();
           Console.WriteLine(p);
+          Console.ForegroundColor = ConsoleColor.Magenta;
+          Console.WriteLine("===============================");
+          Console.ResetColor();
           MenuSubPersonagem(p, a, Perso);
         }
         else {
-          if (MenuPersonagem == 1)
+          if (MenuPersonagem == 2)
           {
             MenuArtPersonagem(p, a, Perso);
           }
           else {
-            if (MenuPersonagem == 2)
+            if (MenuPersonagem == 3)
             {
-            p.MoraXp();
-            MenuSubPersonagem(p, a, Perso);
+              Console.Clear();
+              p.MoraXp();
+              MenuSubPersonagem(p, a, Perso);
             }
             else
             {
-              if (MenuPersonagem ==  4)
+              if (MenuPersonagem ==  5)
               {
                 Perso.Excluir(p);
               }
               else
               {
-                if (MenuPersonagem == 5)
+                if (MenuPersonagem == 6)
                 {
                   Personagem aux = new Personagem();
                   aux.Cadastrar();
@@ -199,8 +311,9 @@ class main
                 }
                 else
                 {
-                  if (MenuPersonagem == 99)
+                  if (MenuPersonagem == 0)
                   {
+                    Console.Clear();
                     MenuPrincipalPersonagem(Perso, a);
                   }
                   else
@@ -221,6 +334,7 @@ class main
   }
   static public void MenuArtefatos(Colecao<Artefato> Artefa)
   {
+        Console.Clear();
         Console.WriteLine("===============================");
         Console.WriteLine("            Artefatos");
         Console.WriteLine("===============================");
@@ -264,7 +378,7 @@ class main
               Console.WriteLine();
               Console.WriteLine("Digite:");
               int AuxMenuA = int.Parse(Console.ReadLine());
-
+              Console.WriteLine("===============================");
               if (AuxMenuA == 0)
               {
                 Artefa.Excluir(a);
@@ -361,7 +475,7 @@ class main
         }
         if (status == 99)
         {
-          Menu();
+          Console.WriteLine();
         }
         else
         {
@@ -371,83 +485,201 @@ class main
   }
   public static void MenuArtPersonagem(Personagem p, Colecao<Artefato> a, Colecao<Personagem> Perso)
   {
-          Console.WriteLine("[0] Mostrar");
-          Console.WriteLine("[1] Flor");
-          Console.WriteLine("[2] Pena");
-          Console.WriteLine("[3] Calice");
-          Console.WriteLine("[4] Relogio");
-          Console.WriteLine("[5] Tiara");
-          Console.WriteLine("[99] Voltar");
+          Console.Clear();
+          Console.WriteLine();
+          Console.ForegroundColor = ConsoleColor.Blue;
+          Console.WriteLine($"Personagem: {p.Nome}");
+          Console.ResetColor();
+          Console.WriteLine();
+          Console.WriteLine("[1] Mostrar");
+          Console.WriteLine("[2] Flor");
+          Console.WriteLine("[3] Pena");
+          Console.WriteLine("[4] Calice");
+          Console.WriteLine("[5] Relogio");
+          Console.WriteLine("[6] Tiara");
+          Console.ForegroundColor = ConsoleColor.DarkRed;
+          Console.WriteLine("[0] Voltar");
+          Console.ResetColor();
 
           Console.WriteLine();
           Console.WriteLine("Digite:");
           int MenuAP = int.Parse(Console.ReadLine());
+    
+          Console.ForegroundColor = ConsoleColor.Magenta;
           Console.WriteLine("===============================");
+          Console.ResetColor();
 
-          if ( MenuAP == 0 )
+          if ( MenuAP == 1 )
           {
             Console.WriteLine(p.Flor);
             Console.WriteLine(p.Pena);
             Console.WriteLine(p.Relogio);
             Console.WriteLine(p.Calice);
             Console.WriteLine(p.Tiara);
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("===============================");
+            Console.ResetColor();
             MenuArtPersonagem(p, a, Perso);
+
           }
-          if ( MenuAP == 1 )
+          if ( MenuAP == 2)
           {
-            MenuSubArtPersonagem( p, p.Flor, a, 0, Perso);
-            
-          }
-          if ( MenuAP == 2 )
-          {
-            MenuSubArtPersonagem( p, p.Pena, a, 1, Perso);
-            
-          }
-          if ( MenuAP == 3 )
-          {
-            MenuSubArtPersonagem( p, p.Calice, a, 3, Perso);
-            
-          }
-          if ( MenuAP == 4 )
-          {
-            MenuSubArtPersonagem( p, p.Relogio, a, 2, Perso);
-            
-          }
-          if ( MenuAP == 5 )
-          {
-            MenuSubArtPersonagem( p, p.Tiara, a, 4, Perso);
-            
-          }
-          if ( MenuAP == 99 )
-          {
-            MenuSubPersonagem( p, a, Perso);
+            if (p.Flor == null)
+            {
+              Console.WriteLine("Você ainda não tem uma Flor escolha uma:");
+              p.PersonagemArtefato("Flor", a, 0);
+              Console.Clear();
+              MenuArtPersonagem(p, a, Perso);
+            }
+            else
+            {
+              Console.Clear();
+              MenuSubArtPersonagem( p, p.Flor, a, 0, Perso);
+            }      
+            Console.WriteLine();
           }
           else
           {
-            Console.WriteLine("Valor Inválido");
-            MenuArtPersonagem(p, a, Perso);
+            if ( MenuAP == 3)
+            {
+              if (p.Pena == null)
+              {
+                Console.WriteLine("Você ainda não tem uma Pena escolha uma:");
+                p.PersonagemArtefato("Pena", a, 1);
+                Console.Clear();
+                MenuArtPersonagem(p, a, Perso);
+              }
+              else
+              {
+                Console.Clear();
+                MenuSubArtPersonagem( p, p.Pena, a, 1, Perso);
+              }
+              Console.WriteLine();
+            }
+            else
+            {
+              if ( MenuAP == 4 )
+              {
+                if (p.Calice == null)
+                {
+                  Console.WriteLine("Você ainda não tem uma Cálice escolha um:");
+                  p.PersonagemArtefato("Calice", a, 3);
+                  Console.Clear();
+                  MenuArtPersonagem(p, a, Perso);
+                }
+                else
+                {
+                  Console.Clear();
+                  MenuSubArtPersonagem( p, p.Calice, a, 3, Perso);
+                }
+                Console.WriteLine();
+              }
+              else
+              {
+                if ( MenuAP == 5 )
+                {
+                  if (p.Relogio == null)
+                  {
+                    Console.WriteLine("Você ainda não tem uma Relogio escolha um:");
+                    p.PersonagemArtefato("Relogio", a, 2);
+                    Console.Clear();
+                    MenuArtPersonagem(p, a, Perso);
+                  }
+                  else
+                  {
+                    Console.Clear();
+                    MenuSubArtPersonagem( p, p.Relogio, a, 2, Perso);
+                  }
+                  Console.WriteLine();
+                  
+                }
+                else
+                {
+                  if ( MenuAP == 6 )
+                  {
+                    if (p.Tiara == null)
+                    {
+                      Console.WriteLine("Você ainda não tem uma Tiara escolha um:");
+                      p.PersonagemArtefato("Tiara", a, 4);
+                      Console.Clear();
+                      MenuArtPersonagem(p, a, Perso);
+                    }
+                    else
+                    {
+                      Console.Clear();
+                      MenuSubArtPersonagem( p, p.Tiara, a, 4, Perso);
+                    }
+                    Console.WriteLine();
+                  }
+                  else
+                  {
+                    if ( MenuAP == 0 )
+                    {
+                      Console.Clear();
+                      MenuSubPersonagem( p, a, Perso);
+                    }
+                    else
+                    {
+                      Console.ForegroundColor = ConsoleColor.DarkRed;
+                      Console.WriteLine("Valor Inválido");
+                      Console.ResetColor();
+                      Console.Clear();
+                      MenuArtPersonagem(p, a, Perso);
+                    }
+                  }
+                }
+              }
+            }
           }
+          
+          
+          
+          
+          
+          
   }
   public static void MenuSubArtPersonagem(Personagem p, Artefato a, Colecao<Artefato> Art, int x, Colecao<Personagem> Perso)
   {
-    Console.WriteLine($"{a.Type} ->");
-    Console.WriteLine("[0] Mostrar");
-    Console.WriteLine("[1] Trocar");
-    Console.WriteLine("[99] Voltar");
+    Console.WriteLine();
+    Console.ForegroundColor = ConsoleColor.Blue;
+    Console.WriteLine($"{p.Nome} - {a.Type}");
+    Console.ResetColor();
+    Console.WriteLine();
+    Console.WriteLine("[1] Mostrar");
+    Console.WriteLine("[2] Trocar");
+    Console.ForegroundColor = ConsoleColor.DarkRed;
+    Console.WriteLine("[0] Voltar");
+    Console.ResetColor();
 
     Console.WriteLine();
     Console.WriteLine("Digite:");
     int auxSAP = int.Parse(Console.ReadLine());
-    Console.WriteLine("===============================");
     
-    if ( auxSAP == 0)
+    Console.ForegroundColor = ConsoleColor.Magenta;
+    Console.WriteLine("===============================");
+    Console.ResetColor();
+    
+    if ( auxSAP == 1)
     {
+      Console.Clear();
+      Console.ForegroundColor = ConsoleColor.Magenta;
+      Console.WriteLine("===============================");
+      Console.ResetColor();
       Console.WriteLine(a);
+      Console.ForegroundColor = ConsoleColor.Magenta;
+      Console.WriteLine("===============================");
+      Console.ResetColor();
+
       MenuSubArtPersonagem(p, a, Art, x, Perso);
     }
-    if ( auxSAP == 1 )
+    
+    if ( auxSAP == 2 )
     {
-      p.PersonagemArtefato( a.Type, Art, x);
+      Console.Clear();
+      Console.ForegroundColor = ConsoleColor.Magenta;
+      Console.WriteLine("===============================");
+      Console.ResetColor();
+      p.PersonagemArtefato( a.Type, Art, x, true);
       if ( a.Type == "Flor" )
       {
         a = p.Flor;
@@ -468,12 +700,31 @@ class main
       {
         a = p.Tiara;
       }
+      Console.ForegroundColor = ConsoleColor.Magenta;
+      Console.WriteLine("===============================");
+      Console.ResetColor();
       MenuSubArtPersonagem(p, a, Art, x, Perso);
     }
-    if ( auxSAP == 99 )
+    if ( auxSAP == 0 )
     {
+      Console.ForegroundColor = ConsoleColor.Magenta;
+      Console.WriteLine("===============================");
+      Console.ResetColor();
+      Console.Clear();
       MenuArtPersonagem( p, Art, Perso);
     }
+    else
+    {
+      Console.ForegroundColor = ConsoleColor.DarkRed;
+      Console.WriteLine("Erro, Tente denovo.");
+      Console.ResetColor();
+      Console.ForegroundColor = ConsoleColor.Magenta;
+      Console.WriteLine("===============================");
+      Console.ResetColor();
+      Console.Clear();
+      MenuSubArtPersonagem(p, a, Art, x, Perso);
+    }
+    
   }
   /*static void MenuSubArtefato(string Tipo, Colecao<Artefato> Arte)
   {
