@@ -814,19 +814,6 @@ class main
       Console.ResetColor();
       Console.Clear();
       MenuSubArtPersonagem(p, a, Art, x, Perso);
-    }
-    
+    }   
   }
-  /*static void MenuSubArtefato(string Tipo, Colecao<Artefato> Arte)
-  {
-    foreach (Artefato a in Arte.Listar())
-    {
-      if ( a.Type == Tipo) 
-      {
-        Console.WriteLine($"[{aux2+1}] {a}");
-        aux2++;
-      }
-    }
-    MenuArtefatos(Artefa);
-  } */
 }
